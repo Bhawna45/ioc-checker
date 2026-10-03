@@ -150,7 +150,7 @@ ioc-checker/
 
 
 
-Bhawna (\[github.com/Bhawna45](https://github.com/Bhawna45))
+Bhawna - https://github.com/Bhawna45
 
 
 
