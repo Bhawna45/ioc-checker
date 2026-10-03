@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IOC Checker</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+    .container { max-width: 800px; margin: auto; }
+    h1 { color: #38bdf8; }
+    .card { background: #1e293b; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+    input[type=text] { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #e2e8f0; font-size: 16px; box-sizing: border-box; }
+    button { background: #38bdf8; color: #0f172a; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 12px; }
+    button:hover { background: #7dd3fc; }
+    .hint { color: #94a3b8; font-size: 14px; }
+    .error { color: #f87171; }
+    .verdict { font-size: 28px; font-weight: bold; margin: 0 0 5px 0; }
+    .HIGH-RISK { color: #f87171; }
+    .SUSPICIOUS { color: #facc15; }
+    .LOW-RISK { color: #4ade80; }
+    .NOT-CHECKED-YET { color: #94a3b8; }
+    .bar { background: #334155; border-radius: 6px; height: 14px; overflow: hidden; margin: 10px 0; }
+    .bar div { height: 100%; background: #38bdf8; }
+    .type { display: inline-block; background: #334155; padding: 3px 10px; border-radius: 12px; font-size: 13px; text-transform: uppercase; }
+    li { margin-bottom: 6px; }
+    .value { word-break: break-all; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>IOC Checker</h1>
+    <p>Check a URL, IP address or file hash for suspicious indicators.</p>
+
+    <div class="card">
+      <form method="POST">
+        <input type="text" name="ioc" value="{{ value }}" placeholder="e.g. http://paypal.com.secure-login.xyz/signin" autofocus>
+        <button type="submit">Check</button>
+      </form>
+      <p class="hint">Examples: a URL, an IP like 8.8.8.8, or an MD5 / SHA-1 / SHA-256 hash.</p>
+      {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    </div>
+
+    {% if result %}
+    <div class="card">
+      <span class="type">{{ result.type }}</span>
+      <p class="value">{{ result.value }}</p>
+      <p class="verdict {{ result.verdict|replace(' ', '-') }}">{{ result.verdict }}</p>
+      <p>Risk score: {{ result.score }} / 100</p>
+      <div class="bar"><div style="width: {{ result.score }}%"></div></div>
+      <h3>Findings</h3>
+      <ul>
+        {% for f in result.findings %}
+        <li>{{ f }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
