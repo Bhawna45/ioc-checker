@@ -6,7 +6,7 @@ A web-based tool for SOC analysts that checks URLs, IP addresses and file hashes
 
 
 
-\*\*Live demo:\*\* coming soon
+\*\*Live demo:\*\* https://ioc-checker.onrender.com
 
 
 
